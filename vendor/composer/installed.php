@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '60a9b1109644ffd429f77fd4019d9b6fa9e56191',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '60a9b1109644ffd429f77fd4019d9b6fa9e56191',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -25,6 +25,15 @@
             'reference' => '181d480e08d9476e61381e04a71b34dc0432e812',
             'type' => 'library',
             'install_path' => __DIR__ . '/../nikic/fast-route',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'rdlowrey/auryn' => array(
+            'pretty_version' => 'v1.4.4',
+            'version' => '1.4.4.0',
+            'reference' => 'dae57592229d313b59414a2c8334e61e6eb00928',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../rdlowrey/auryn',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
