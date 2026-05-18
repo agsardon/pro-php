@@ -6,7 +6,7 @@ final class TwigtemplateRendererFactory
 {
     public static function create(): TemplateRenderer
     {
-        $loader = new \Twig\Loader\FilesystemLoader(ROOT_DIR . '/src/Views');
+        $loader = new \Twig\Loader\FilesystemLoader(ROOT_DIR . '/templates');
         $twig = new \Twig\Environment($loader);
 
         return new TwigTemplateRenderer($twig);

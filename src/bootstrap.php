@@ -28,8 +28,8 @@ switch ($routeInfo[0]) {
             [$controllerName, $method] = explode('@', $handler);
         }
 
-        $injector = include 'dependencies.php';
-        $controller = $injector->make($controllerName);
+        $container = include 'dependencies.php';
+        $controller = $container->get($controllerName);
 
         $response = $controller->$method($request, $vars);
         break;

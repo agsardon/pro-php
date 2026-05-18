@@ -1,16 +1,21 @@
 <?php declare(strict_types=1);
 
-use Auryn\Injector;
+use DI\ContainerBuilder;
+use Psr\Container\ContainerInterface;
 use SocialNews\Framework\Rendering\TemplateRenderer;
 use SocialNews\Framework\Rendering\TwigTemplateRendererFactory;
 
-$injector = new Injector();
+$builder = new ContainerBuilder();
+$builder->useAutowiring(true);
+$builder->useAttributes(false);
 
-$injector->delegate(
-    TemplateRenderer::class,
-    function() use ($injector) : TemplateRenderer {
-        $factory = $injector->make(TwigTemplateRendererFactory::class);
+$builder->addDefinitions([
+    TemplateRenderer::class => \DI\factory(function (ContainerInterface $c) {
+        $factory = $c->get(TwigTemplateRendererFactory::class);
         return $factory->create();
-});
+    }),
+]);
 
-return $injector;
+$container = $builder->build();
+
+return $container;

@@ -17,7 +17,9 @@ final class FrontPageController
 
     public function show(Request $request): Response
     {
-        $content = 'Hello, ' . $request->query->get('name', 'World') . '!';
+        $content = $this->templateRenderer->render('front-page.html.twig', [
+            'title' => 'Social News',
+        ]);
 
         return new Response($content);
     }
