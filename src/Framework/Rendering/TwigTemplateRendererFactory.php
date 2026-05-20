@@ -2,7 +2,10 @@
 
 namespace SocialNews\Framework\Rendering;
 
-final class TwigtemplateRendererFactory
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
+final class TwigTemplateRendererFactory
 {
     private TemplateDirectory $templateDirectory;
 
@@ -11,11 +14,13 @@ final class TwigtemplateRendererFactory
         $this->templateDirectory = $templateDirectory;
     }
 
-    public function create(): TemplateRenderer
+    public function create(): TwigTemplateRenderer
     {
-        $templateDirectory = $this->templateDirectory->toString();
-        $loader = new \Twig\Loader\FilesystemLoader($templateDirectory);
-        $twig = new \Twig\Environment($loader);
+        $loader = new FilesystemLoader(
+            $this->templateDirectory->toString()
+        );
+
+        $twig = new Environment($loader);
 
         return new TwigTemplateRenderer($twig);
     }

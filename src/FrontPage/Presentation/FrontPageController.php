@@ -26,4 +26,4 @@ final class FrontPageController
         ]);
         return new Response($content);
     }
-}
+} 

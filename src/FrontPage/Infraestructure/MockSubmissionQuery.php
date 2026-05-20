@@ -7,12 +7,18 @@ use SocialNews\FrontPage\Application\SubmissionsQuery;
 
 final class MockSubmissionQuery implements SubmissionsQuery
 {
-    public function execute(): array
+    private array $submissions;
+    
+    public function __construct()
     {
-        return [
+        $this->submissions = [
             new Submission('DuckDuckGo', 'http://duckduckgo.com'),
             new Submission('Google', 'http://google.com'),
             new Submission('Bing', 'http://bing.com'),
         ];
+    }
+    public function execute(): array
+    {
+        return $this->submissions;
     }
 }

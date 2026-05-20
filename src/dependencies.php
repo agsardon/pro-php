@@ -2,26 +2,53 @@
 
 use DI\ContainerBuilder;
 use Psr\Container\ContainerInterface;
+
 use SocialNews\Framework\Rendering\TemplateDirectory;
 use SocialNews\Framework\Rendering\TemplateRenderer;
 use SocialNews\Framework\Rendering\TwigTemplateRendererFactory;
-use SocialNews\FrontPage\Application\SubmissionsQuery;
 
 $builder = new ContainerBuilder();
+
 $builder->useAutowiring(true);
 $builder->useAttributes(false);
 
 $builder->addDefinitions([
-    TemplateRenderer::class => \DI\factory(function (ContainerInterface $c) {
-        $factory = $c->get(TwigTemplateRendererFactory::class);
-        return $factory->create();
-    }),
+
+    /*
+     |------------------------------------------------------------
+     | Template directory
+     |------------------------------------------------------------
+     */
     TemplateDirectory::class => \DI\factory(function () {
-        return new TemplateDirectory(ROOT_DIR);
+        return new TemplateDirectory(
+            ROOT_DIR // raíz del proyecto
+        );
     }),
-    SubmissionsQuery::class => \DI\factory(function () {
-        return new \SocialNews\FrontPage\Infraestructure\MockSubmissionQuery();
-    }),
+
+    /*
+     |------------------------------------------------------------
+     | Template renderer
+     |------------------------------------------------------------
+     */
+    TemplateRenderer::class => \DI\factory(
+        function (ContainerInterface $container) {
+            return $container
+                ->get(TwigTemplateRendererFactory::class)
+                ->create();
+        }
+    ),
+
+    /*
+     |------------------------------------------------------------
+     | Submissions query
+     |------------------------------------------------------------
+     */
+    SocialNews\FrontPage\Application\SubmissionsQuery::class => \DI\factory(
+        function () {
+            return new SocialNews\FrontPage\Infraestructure\MockSubmissionQuery();
+        }
+    )
+
 ]);
 
 $container = $builder->build();
