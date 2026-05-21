@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
+use Doctrine\DBAL\Connection;
 use DI\ContainerBuilder;
 use Psr\Container\ContainerInterface;
-
+use SocialNews\Framework\Dbal\ConnectionFactory;
+use SocialNews\Framework\Dbal\DatabaseUrl;
 use SocialNews\Framework\Rendering\TemplateDirectory;
 use SocialNews\Framework\Rendering\TemplateRenderer;
 use SocialNews\Framework\Rendering\TwigTemplateRendererFactory;
@@ -44,10 +46,31 @@ $builder->addDefinitions([
      |------------------------------------------------------------
      */
     SocialNews\FrontPage\Application\SubmissionsQuery::class => \DI\factory(
-        function () {
-            return new SocialNews\FrontPage\Infraestructure\MockSubmissionQuery();
+        function (ContainerInterface $c) {
+            return new SocialNews\FrontPage\Infraestructure\DbalSubmissionsQuery(
+                $c->get(Connection::class)
+            );
         }
-    )
+    ),
+
+    /*
+     |------------------------------------------------------------
+     | Database connection
+     |------------------------------------------------------------
+     */
+    DatabaseUrl::class => \DI\factory(function () {
+        return new DatabaseUrl(
+            ROOT_DIR . '/storage/db.sqlite3'
+        );
+    }),
+
+    Connection::class => \DI\factory(
+        function (ContainerInterface $container) {
+            return (new ConnectionFactory(
+                $container->get(DatabaseUrl::class),
+            ))->create();
+        }
+    ),
 
 ]);
 

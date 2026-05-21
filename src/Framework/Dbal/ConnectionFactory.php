@@ -19,7 +19,8 @@ final class ConnectionFactory
     {
         $config = new Configuration();
         return DriverManager::getConnection([
-            'url' => $this->databaseUrl->toString(),
+            'path' => $this->databaseUrl->toString(),
+            'driver' => 'pdo_sqlite',
         ], $config);
-    }
+    } 
 }

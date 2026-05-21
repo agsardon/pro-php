@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SocialNews\FrontPage\Presentation;
 
@@ -20,10 +22,9 @@ final class FrontPageController
 
     public function show(Request $request): Response
     {
-        
         $content = $this->templateRenderer->render('front-page.html.twig', [
             'submissions' => $this->submissionsQuery->execute(),
         ]);
         return new Response($content);
     }
-} 
+}
